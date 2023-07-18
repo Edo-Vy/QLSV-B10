@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>OOP</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h3 class="text-center d-4">Bài Tập Quản Lý Sinh Viên</h3>
+      <div class="row mt-3">
+        <div class="col-6">
+          <div class="form-group">
+            <p>Mã Sinh Viên</p>
+            <input class="form-control" id="maSV" />
+          </div>
+          <div class="form-group">
+            <p>Email</p>
+            <input class="form-control" id="emailSV" />
+          </div>
+          <div class="form-group">
+            <p>Ngày Sinh</p>
+            <input class="form-control" id="ngaySinh" type="date" />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <p>Tên Sinh Viên</p>
+            <input class="form-control" id="tenSV" />
+          </div>
+          <div class="form-group">
+            <p>Mật Khẩu</p>
+            <input class="form-control" id="matKhau" />
+          </div>
+          <div class="form-group">
+            <p>Khóa Học</p>
+            <select class="form-control" id="khoaHoc">
+              <option>Front End</option>
+              <option>Back End</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 mt-2 row">
+          <div class="col-4">
+            <p>Điểm Toán</p>
+            <input class="form-control" id="diemToan" />
+          </div>
+          <div class="col-4">
+            <p>Điểm Lý</p>
+            <input class="form-control" id="diemLy" />
+          </div>
+          <div class="col-4">
+            <p>Điểm Hóa</p>
+            <input class="form-control" id="diemHoa" />
+          </div>
+        </div>
+      </div>
+      <div class="col-12 mt-3 " style="text-align:center;">
+        <button class="btn btn-success" id="btnThemSV">Thêm Sinh Viên</button>
+        <button class="btn btn-success ml-2" id="btnCapNhatSV">Cập NhậtSinh Viên</button>
+
+      </div>
+      <div class="form-group mt-3">
+        <div class="input-group">
+          <input class="form-control" id="timKiem"/>
+          <button class="btn btn-success" id="btnTimKiem">Tìm Kiếm</button>
+        </div>
+      </div>
+      <div class="mt-4">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Mã Sinh Viên</th>
+              <th>Tên Sinh Viên</th>
+              <th>Emai Sinh Viên</th>
+              <th>Ngày Sinh Sinh Viên</th>
+              <th>Khóa Học</th>
+              <th>Điểm Trung Bình</th>
+            </tr>
+          </thead>
+          <tbody id="tblSinhVien">
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Thư viện  -->
+    <!-- models chèn trước controllers -->
+    <script src="./models/SinhVien.js"></script>
+    <!-- controllers -->
+    <script src="./controllers/index.js"></script>
+  </body>
+</html>
