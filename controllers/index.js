@@ -6,9 +6,9 @@
 var mangSinhVien = [];// [sv1, sv2 ] -> [{maSV: 01, tenSV: nguyen van a, },{maSV: 02, tenSV: nguyen van b, }]
 //input : thông tin sinh viên : SinhVien
 
-document.querySelector('#btnThemSV').onclick = function(){
+document.querySelector('#btnThemSV').onclick = function () {
 
-   // var mangSinhVien = []; // [sv1, sv2 ] -> [{maSV: 01, tenSV: nguyen van a, },{maSV: 02, tenSV: nguyen van b, }]
+    // var mangSinhVien = []; // [sv1, sv2 ] -> [{maSV: 01, tenSV: nguyen van a, },{maSV: 02, tenSV: nguyen van b, }]
     //input : thông tin sinh viên : SinhVien
     var sv = new SinhVien();
     // Lấy thông tin từ giao diện đưa vào input sv
@@ -93,9 +93,14 @@ document.querySelector('#btnThemSV').onclick = function(){
     // Sau khi thêm 1 sinh viên => mảng sinh viên [{},{},...]
     renderTableSinhVien(mangSinhVien);
 
+
+    // Sau khi thêm sinh viên thành công => lưu mảng sinh viên vào localStorage
+    var sSinhVien = JSON.stringify(mangSinhVien);
+    luulocalStorage('mangSinhVien', sSinhVien);
+
 }
 
-function renderTableSinhVien(arrSinhVien){ // input :arrSinhVien [{},{},..]
+function renderTableSinhVien(arrSinhVien) { // input :arrSinhVien [{},{},..]
 
 
     //output html = <tr><td></td>.....</tr>
@@ -105,8 +110,21 @@ function renderTableSinhVien(arrSinhVien){ // input :arrSinhVien [{},{},..]
 
         var sv = arrSinhVien[index]; // Mỗi lần duyệt qua lấy ra 1 object thứ index của arrSinhVien [{0}, {1}]
 
+        // Nếu bấm từ nút thêm ( được new từ SinhVien => nên sẽ có tinhDiemTrungBinh)
+        // Nếu lấy từ localStorage thì bị mất phương thức tínhDiemTrungBinh
+        // hasOwnProperty('ten_thuoc_tinh') : Nếu có tên thuộc tính đó trong object thì trả về giá trị true, không có trả về false
+        if (!sv.hasOwnProperty('tinhDiemTrungBinh')) {
+
+            sv.__proto__.tinhDiemTrungBinh = function () {
+                //.__proto__. : mở rộng thuộc tính của object
+                var diemTB = 0;
+                diemTB = (Number(sv.diemToan) + Number(sv.diemHoa) + Number(sv.diemLy)) / 3;
+                return diemTB;
+            }
+        }
         // Từ object tạo ra thẻ tr
         //  `` -> String template : gõ xuống dòng 
+
         var tr = `
              <tr>
                 <td>${sv.maSV}</td>
@@ -117,7 +135,9 @@ function renderTableSinhVien(arrSinhVien){ // input :arrSinhVien [{},{},..]
                 <td>${sv.tinhDiemTrungBinh()}</td>
                 <td>
                     <button class ="btn btn-danger" onclick ="xoaSinhVien('${index}')">  Xóa </button>
-                    <button class ="btn btn-primary"> Sửa </button>
+                    <button class ="btn btn-primary" onclick ="suaSinhVien('${sv.maSV}')"> Sửa </button>
+                    <button class ="btn btn-danger ml-2" onclick ="xoaMaSinhVien('${sv.maSV}')">  Xóa Mã Sinh Viên </button>
+                   
                 </td>
              </tr>
             `;
@@ -131,10 +151,165 @@ function renderTableSinhVien(arrSinhVien){ // input :arrSinhVien [{},{},..]
 
 }
 
-function xoaSinhVien(index){
-     
-    mangSinhVien.splice(index,1);
+function xoaSinhVien(index) {
+
+    mangSinhVien.splice(index, 1);
 
     // Sau khi xóa 1 sinh viên thì tạo lại bảng
     renderTableSinhVien(mangSinhVien);
+}
+// Xóa 1 sinh viên
+// function xoaMaSinhVien(maSinhVien) {
+
+//     var viTriXoa = -1;
+//     for (var index = 0; index < mangSinhVien.length; index++) {
+//         // Mỗi lần duyệt lấy ra 1 sinh viên
+//         var sv = mangSinhVien[index];
+//         if (sv.maSV == maSinhVien) { // Nếu obj sinh viên trong mảng == mã sinh viên được click thì lấy ra vị trí
+
+//             viTriXoa = index;
+//             break;
+//         }
+
+//     }
+//     mangSinhVien.splice(viTriXoa, 1);
+
+//     // Sau khi xóa tạo lại table mới
+//     renderTableSinhVien(mangSinhVien);
+// }
+
+// Xóa  mã sinh viên bị trùng
+
+function xoaMaSinhVien(maSinhVien) {
+
+    var viTriXoa = -1;
+    for (var index = mangSinhVien.length - 1; index >= 0; index--) {
+        // Mỗi lần duyệt lấy ra 1 sinh viên
+        var sv = mangSinhVien[index];
+        if (sv.maSV == maSinhVien) { // Nếu obj sinh viên trong mảng == mã sinh viên được click thì lấy ra vị trí
+
+            mangSinhVien.splice(viTriXoa, 1);
+        }
+
+    }
+
+
+    // Sau khi xóa tạo lại table mới
+    renderTableSinhVien(mangSinhVien);
+}
+
+// Lưu thông tin localStorage
+function luulocalStorage(key, value) {
+
+    localStorage.setItem(key, value);
+}
+
+// Lấy dữ liệu từ localStorage
+
+function laylocalStorage(key) {
+    // Kiểm tra xem localStorage có key đó ko
+    if (localStorage.getItem(key)) {
+        return localStorage.getItem(key);
+    }
+    return undefined;
+}
+
+// Định nghĩa sự kiện khi trang load xong html
+window.onload = function () {
+
+    var value = laylocalStorage('mangSinhVien');
+    if (value !== undefined) {
+        // Biển đổi value thành mảng lại
+        mangSinhVien = JSON.parse(value);
+        // Gọi hàm từ mảng để tạo ra table
+        renderTableSinhVien(mangSinhVien);
+    }
+}
+
+
+//======== Mở rộng thuộc tính của Prototype ==================
+
+// SinhVien.prototype.tenThuocTinhMoRong = 'abc';
+// SinhVien.prototype.tenThuocTinhMoRongFunc = function(){
+
+//     console.log('abc');
+// };
+
+// var sv = new SinhVien();
+// console.log(sv.tenThuocTinhMoRong);
+// sv.tenThuocTinhMoRongFunc();
+
+// Sửa thông tin sinh viên
+function suaSinhVien(maSinhVienClick) {
+
+    for (var index = 0; index < mangSinhVien.length; index++) {
+        // Mỗi lần duyệt lấy ra 1 sinh viên object
+        var sinhVien = mangSinhVien[index];
+        // Đem mã sinhvienClick so sánh với thằng object sinh viên lấy ra
+        if (maSinhVienClick == sinhVien.maSV) {
+            // Tìm thấy
+            // Gán các giá trị từ object lên các thẻ input
+
+            document.querySelector('#maSV').value = sinhVien.maSV;
+            document.querySelector('#tenSV').value = sinhVien['tenSV'];
+            document.querySelector('#emailSV').value = sinhVien.emailSV;
+            document.querySelector('#matKhau').value = sinhVien.matKhau;
+
+            var value = moment(sinhVien.ngaySinh).format('YYYY-MM-DD');
+            document.querySelector('#ngaySinh').value = value;
+
+            document.querySelector('#khoaHoc').value = sinhVien.khoaHoc;
+            document.querySelector('#diemToan').value = sinhVien.diemToan;
+            document.querySelector('#diemLy').value = sinhVien.diemLy;
+            document.querySelector('#diemHoa').value = sinhVien.diemHoa;
+
+
+            break;
+        }
+    }
+}
+
+// Cập nhật
+
+
+document.querySelector('#btnCapNhatSV').onclick = function(){
+    // Lấy dữ liệu từ người dùng nhập vào sau khi chỉnh sửa
+
+    var svCapNhat = new SinhVien();
+    // Lấy thông tin từ giao diện đưa vào input sv
+    svCapNhat.maSV = document.querySelector('#maSV').value;
+    svCapNhat['tenSV'] = document.querySelector('#tenSV').value;
+    svCapNhat.emailSV = document.querySelector('#emailSV').value;
+    svCapNhat.matKhau = document.querySelector('#matKhau').value;
+
+    // Ngày Sinh -> format client
+    var ngaySinh = new Date(document.querySelector('#ngaySinh').value);
+    svCapNhat.ngaySinh = ngaySinh.toLocaleDateString();
+
+    svCapNhat.khoaHoc = document.querySelector('#khoaHoc').value;
+    svCapNhat.diemToan = document.querySelector('#diemToan').value;
+    svCapNhat.diemLy = document.querySelector('#diemLy').value;
+    svCapNhat.diemHoa = document.querySelector('#diemHoa').value;
+
+    // Duyệt qua mảng tìm ra object sinhvien cần cập nhật
+    for ( var index = 0; index < mangSinhVien.length; index ++){
+
+        // Mỗi lần duyệt lấy ra 1 sv trong mảng
+        var svMang = mangSinhVien[index];
+        if(svMang.maSV === svCapNhat.maSV){
+            // Đem dữ liệu trong mảng sửa thành dữ liệu người dùng thay đổi
+            svMang.tenSV = svCapNhat.tenSV;
+            svMang.emailSV = svCapNhat.emailSV;
+            svMang.matKhau = svCapNhat.matKhau;
+            svMang.ngaySinh = svCapNhat.ngaySinh;
+            svMang.khoaHoc = svCapNhat.khoaHoc;
+            svMang.diemToan = svCapNhat.diemToan;
+            svMang.diemHoa = svCapNhat.diemHoa;
+            svMang.diemLy = svCapNhat.diemLy;
+            // Sau khi cập nhật sinh viên trong mảng thì gọi hàm render lại table
+            renderTableSinhVien(mangSinhVien);
+            break;
+        }
+    }
+
 }

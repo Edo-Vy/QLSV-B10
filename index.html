@@ -67,14 +67,15 @@
           </div>
         </div>
       </div>
-      <div class="col-12 mt-3 " style="text-align:center;">
+      <div class="col-12 mt-3" style="text-align: center">
         <button class="btn btn-success" id="btnThemSV">Thêm Sinh Viên</button>
-        <button class="btn btn-success ml-2" id="btnCapNhatSV">Cập NhậtSinh Viên</button>
-
+        <button class="btn btn-success ml-2" id="btnCapNhatSV">
+          Cập NhậtSinh Viên
+        </button>
       </div>
       <div class="form-group mt-3">
         <div class="input-group">
-          <input class="form-control" id="timKiem"/>
+          <input class="form-control" id="timKiem" />
           <button class="btn btn-success" id="btnTimKiem">Tìm Kiếm</button>
         </div>
       </div>
@@ -90,12 +91,9 @@
               <th>Điểm Trung Bình</th>
             </tr>
           </thead>
-          <tbody id="tblSinhVien">
-
-          </tbody>
+          <tbody id="tblSinhVien"></tbody>
         </table>
       </div>
-
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -114,6 +112,8 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+    <!-- cdn moment : Ngày - giờ -->
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
     <!-- Thư viện  -->
     <!-- models chèn trước controllers -->
     <script src="./models/SinhVien.js"></script>
