@@ -29,6 +29,25 @@ document.querySelector('#btnThemSV').onclick = function () {
     console.log(sv);
     //output : html  String <tr></tr>
 
+
+
+    // Bắt lỗi khi người dùng nhập không hợp lệ
+    // .trim() : Loại bỏ khoảng trống đầu và cuối của 1 chuỗi => VD :     abc     => abc
+    // if (sv.maSV.trim() === ''){
+
+    //     alert('Mã sinh viên không hợp lệ');
+    //     return;
+    // }
+    // Kiểm tra rỗng
+    var valid = true;
+    valid &= kiemTraRong(sv.maSV,'#required__err__ma', 'Mã Sinh Viên') & kiemTraRong(sv.tenSV,'#required__err__ten', 'Tên Sinh Viên');
+
+    valid &= kiemTraTatCaKyTu(sv.tenSV,'#all__letter', 'Tên Sinh Viên');
+    // Kiểm tra biến cờ
+
+    if(!valid){
+        return;
+    }
     // Cách 1: Tạo html = createElement
     {
         // // - Bước 1: Tạo ra thẻ tr
@@ -272,7 +291,7 @@ function suaSinhVien(maSinhVienClick) {
 // Cập nhật
 
 
-document.querySelector('#btnCapNhatSV').onclick = function(){
+document.querySelector('#btnCapNhatSV').onclick = function () {
     // Lấy dữ liệu từ người dùng nhập vào sau khi chỉnh sửa
 
     var svCapNhat = new SinhVien();
@@ -292,11 +311,11 @@ document.querySelector('#btnCapNhatSV').onclick = function(){
     svCapNhat.diemHoa = document.querySelector('#diemHoa').value;
 
     // Duyệt qua mảng tìm ra object sinhvien cần cập nhật
-    for ( var index = 0; index < mangSinhVien.length; index ++){
+    for (var index = 0; index < mangSinhVien.length; index++) {
 
         // Mỗi lần duyệt lấy ra 1 sv trong mảng
         var svMang = mangSinhVien[index];
-        if(svMang.maSV === svCapNhat.maSV){
+        if (svMang.maSV === svCapNhat.maSV) {
             // Đem dữ liệu trong mảng sửa thành dữ liệu người dùng thay đổi
             svMang.tenSV = svCapNhat.tenSV;
             svMang.emailSV = svCapNhat.emailSV;

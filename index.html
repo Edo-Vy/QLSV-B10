@@ -25,6 +25,7 @@
           <div class="form-group">
             <p>Mã Sinh Viên</p>
             <input class="form-control" id="maSV" />
+            <p class="text-danger " id="required__err__ma"></p>
           </div>
           <div class="form-group">
             <p>Email</p>
@@ -39,6 +40,10 @@
           <div class="form-group">
             <p>Tên Sinh Viên</p>
             <input class="form-control" id="tenSV" />
+            <p class="text-danger" id="required__err__ten"></p>
+            <p class="text-danger" id="all__letter"></p>
+
+
           </div>
           <div class="form-group">
             <p>Mật Khẩu</p>
@@ -70,7 +75,7 @@
       <div class="col-12 mt-3" style="text-align: center">
         <button class="btn btn-success" id="btnThemSV">Thêm Sinh Viên</button>
         <button class="btn btn-success ml-2" id="btnCapNhatSV">
-          Cập NhậtSinh Viên
+          Cập Nhật Sinh Viên
         </button>
       </div>
       <div class="form-group mt-3">
@@ -114,6 +119,7 @@
     ></script>
     <!-- cdn moment : Ngày - giờ -->
     <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/moment.min.js"></script>
+    <script src="./util/validation.js"></script>
     <!-- Thư viện  -->
     <!-- models chèn trước controllers -->
     <script src="./models/SinhVien.js"></script>
