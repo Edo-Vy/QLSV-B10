@@ -25,15 +25,17 @@
           <div class="form-group">
             <p>Mã Sinh Viên</p>
             <input class="form-control" id="maSV" />
-            <p class="text-danger " id="required__err__ma"></p>
+            <p class="text-danger" id="required__err__ma"></p>
           </div>
           <div class="form-group">
             <p>Email</p>
             <input class="form-control" id="emailSV" />
+            <p class="text-danger" id="err__mail"></p>
           </div>
           <div class="form-group">
             <p>Ngày Sinh</p>
             <input class="form-control" id="ngaySinh" type="date" />
+            <p class="text-danger" id="err_date"></p>
           </div>
         </div>
         <div class="col-6">
@@ -42,12 +44,11 @@
             <input class="form-control" id="tenSV" />
             <p class="text-danger" id="required__err__ten"></p>
             <p class="text-danger" id="all__letter"></p>
-
-
           </div>
           <div class="form-group">
             <p>Mật Khẩu</p>
             <input class="form-control" id="matKhau" />
+            <p class="text-danger" id="err__matkhau"></p>
           </div>
           <div class="form-group">
             <p>Khóa Học</p>
@@ -61,14 +62,22 @@
           <div class="col-4">
             <p>Điểm Toán</p>
             <input class="form-control" id="diemToan" />
+            <p class="text-danger" id="err_diemToan"></p>
+            <p class="text-danger" id="err_diem_max_min_toan"></p>
           </div>
           <div class="col-4">
             <p>Điểm Lý</p>
             <input class="form-control" id="diemLy" />
+            <p class="text-danger" id="err_diemLy"></p>
+            <p class="text-danger" id="err_diem_max_min_ly"></p>
+
           </div>
           <div class="col-4">
             <p>Điểm Hóa</p>
             <input class="form-control" id="diemHoa" />
+            <p class="text-danger" id="err_diemHoa"></p>
+            <p class="text-danger" id="err_diem_max_min_hoa"></p>
+
           </div>
         </div>
       </div>
